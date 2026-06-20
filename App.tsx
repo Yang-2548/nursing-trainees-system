@@ -10,23 +10,22 @@ import { UserPlus, UserMinus } from 'lucide-react';
 
 const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState('dashboard');
-  const [records, setRecords] = useState<TrainingRecord[]>([]);
+  const [records, setRecords] = useState<TrainingRecord[]>(() => {
+    const saved = localStorage.getItem('training_records_v2');
+    if (saved) {
+      try {
+        return JSON.parse(saved);
+      } catch (e) {
+        console.error('Failed to parse saved records:', e);
+      }
+    }
+    return INITIAL_DATA;
+  });
   const [showForm, setShowForm] = useState(false);
   const [editingRecord, setEditingRecord] = useState<TrainingRecord | null>(null);
 
   useEffect(() => {
-    const saved = localStorage.getItem('training_records_v2');
-    if (saved) {
-      setRecords(JSON.parse(saved));
-    } else {
-      setRecords(INITIAL_DATA);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (records.length > 0) {
-      localStorage.setItem('training_records_v2', JSON.stringify(records));
-    }
+    localStorage.setItem('training_records_v2', JSON.stringify(records));
   }, [records]);
 
   const handleAddRecord = (record: TrainingRecord) => {

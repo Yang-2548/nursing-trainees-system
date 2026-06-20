@@ -4,12 +4,20 @@ export type TrainingType = 'INCOMING' | 'OUTGOING';
 export interface BaseTrainingRecord {
   id: string;
   name: string;
+  title: string; // 职称
+  workYears: number; // 工龄
   specialty: string;
   startDate: string;
   endDate: string;
   durationMonths: number;
   type: TrainingType;
   createdAt: string;
+}
+
+export interface TrainingCertificate {
+  name: string;
+  data: string; // Base64
+  type: string; // mime type
 }
 
 export interface IncomingRecord extends BaseTrainingRecord {
@@ -19,6 +27,8 @@ export interface IncomingRecord extends BaseTrainingRecord {
   province: string;
   city: string;
   department: string;
+  evidence?: TrainingCertificate;
+  isSpecialistBase?: boolean; // 是否到专科护士基地进修
 }
 
 export interface OutgoingRecord extends BaseTrainingRecord {
@@ -26,11 +36,13 @@ export interface OutgoingRecord extends BaseTrainingRecord {
   department: string;
   institution: string;
   level: string;
-  certificate?: {
-    name: string;
-    data: string; // Base64
-    type: string; // mime type
-  };
+  certificate?: TrainingCertificate; // 结业证
+  // 专科护士认证专项
+  isSpecialistCert?: boolean;
+  certBody?: string;
+  certSpecialty?: string;
+  certDate?: string;
+  certEvidence?: TrainingCertificate;
 }
 
 export type TrainingRecord = IncomingRecord | OutgoingRecord;
@@ -41,7 +53,7 @@ export interface FilterState {
   department: string;
   specialty: string;
   searchTerm: string;
-  // 扩展筛选字段
+  evidenceStatus?: 'ALL' | 'HAS' | 'NONE';
   hospital?: string;
   hospitalLevel?: string;
   province?: string;

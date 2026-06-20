@@ -5,6 +5,8 @@ import { generateId } from './utils';
 export const HOSPITAL_LEVELS = ['三级甲等', '三级乙等', '二级甲等', '二级乙等', '其他'];
 export const INSTITUTION_LEVELS = ['国家级', '省级', '市级', '校级', '其他'];
 
+export const TITLES = ['主任医师/护师', '副主任医师/护师', '主治医师/主管护师', '住院医师/护师', '助理护师', '其他'];
+
 // 综合更新后的科室列表
 export const DEPARTMENTS = [
   '急诊病房', '全科医学科', '急诊科', '重症医学科', '消化内科', '神经内科', '血液内科', '消化内镜中心',
@@ -21,6 +23,8 @@ export const INITIAL_DATA: TrainingRecord[] = [
     id: generateId(),
     type: 'INCOMING',
     name: '张三',
+    title: '主管护师',
+    workYears: 8,
     hospital: 'XX省人民医院',
     hospitalLevel: '三级甲等',
     province: '广东省',
@@ -36,6 +40,8 @@ export const INITIAL_DATA: TrainingRecord[] = [
     id: generateId(),
     type: 'OUTGOING',
     name: '李四',
+    title: '副主任医师',
+    workYears: 15,
     department: '胃肠外科',
     specialty: '微创外科',
     institution: '北京协和医院',
